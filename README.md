@@ -1,6 +1,6 @@
-# AnonLFI 2.0: Extensible Anonymization for CSIRTs
+# AnonLFI 2.0: Extensible Architecture for PII Anonymization in CSIRTs with OCR and Technical Recognizers
 
-A pseudonymization framework for CSIRTs that resolves the conflict between data confidentiality (GDPR/LGPD) and analytical utility. It allows sensitive security incident data to be used safely for threat analysis, detection engineering, and training AI (LLM) models.
+AnonLFI 2.0 is a modular pseudonymization framework for CSIRTs that resolves the conflict between data confidentiality (GDPR/LGPD) and analytical utility. It uses HMAC-SHA256 to generate strong, reversible pseudonyms, natively preserves XML and JSON structures, and integrates an OCR pipeline and specialized technical recognizers to handle PII in complex security artifacts. This allows sensitive incident data to be used safely for threat analysis, detection engineering, and training AI (LLM) models.
 
 ## System Architecture
 
@@ -247,7 +247,7 @@ uv run scripts/deanonymize.py "[PERSON_...hash...]"
 - `--lang <code>`: Sets the document's language (e.g., `en`, `pt`). Default: `en`.
 - `--preserve-entities <TYPES>`: A comma-separated list of entity types to *not* anonymize (e.g., `"LOCATION,HOSTNAME"`).
 - `--allow-list <TERMS>`: A comma-separated list of terms to ignore.
-- `--slug-length <NUM>`: Sets the character length of the hash displayed in the slug (1-64). Defaults to 64 (the full hash) if not specified.
+- `--slug-length <NUM>`: Sets the character length of the hash displayed in the slug (1-64). If not specified, it defaults to 64 (the full hash), which guarantees no collisions.
 - `--list-entities`: Lists all supported entity types and exits.
 - `--list-languages`: Lists all supported languages and exits.
 
