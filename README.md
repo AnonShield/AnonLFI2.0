@@ -186,7 +186,7 @@ The tool is pre-configured for **24 languages**:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/gt-rnp-lfi/anon.git
+    git clone https://github.com/AnonShield/AnonLFI2.0.git
     ```
 
 2.  **Set the Secret Key (Mandatory):**
