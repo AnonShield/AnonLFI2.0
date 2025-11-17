@@ -37,7 +37,7 @@ graph TD
     subgraph "4. Anonymization Engine (engine.py)"
         TXT_BRUTO -- "orchestrator.anonymize_text()" --> ENG_A(Presidio Analyzer);
         ENG_A -- "Loads Models (spaCy, Transformer)" --> MOD(models/);
-        ENG_A -- "Identifies Entities (PII, CVE...)" --> ENG_B(CustomSlugAnonymizer);
+        ENG_A -- "Identifies Entities (PII, technical...)" --> ENG_B(CustomSlugAnonymizer);
         ENG_B -- "HMAC-SHA256(text, SECRET_KEY)" --> HASH[Secure Hash];
         HASH -- "Saves Mapping (original, hash)" --> DB[(db/entities.db)];
         HASH -- "Generates Slug [TYPE_hash...]" --> SLUG[Anonymized Slug];
