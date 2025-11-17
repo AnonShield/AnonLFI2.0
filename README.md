@@ -1,6 +1,6 @@
-# Data Anonymization Tool with Controlled Re-identification
+# AnonLFI 2.0: Extensible Anonymization for CSIRTs
 
-A practical and intelligent tool for anonymizing security incident tickets, designed for local use by CSIRTs, ensuring that sensitive data can be safely used to train AI (LLM) models.
+A pseudonymization framework for CSIRTs that resolves the conflict between data confidentiality (GDPR/LGPD) and analytical utility. It allows sensitive security incident data to be used safely for threat analysis, detection engineering, and training AI (LLM) models.
 
 ## System Architecture
 
@@ -53,7 +53,7 @@ graph TD
 
 ## Key Features
 
-- **Multiple File Format Support:** Anonymizes a wide range of formats, including `.txt`, `.csv`, `.json`, `.xml`, `.pdf`, `.docx`, and `.xlsx`.
+- **Structure-Preserving Processing:** Natively processes `.json` and `.xml` files to preserve their original hierarchy, while also supporting `.txt`, `.csv`, `.pdf`, `.docx`, and `.xlsx`.
 - **OCR for Images:** Automatically extracts and anonymizes text embedded in images within PDF and DOCX files. Also supports direct anonymization of image files like `.png`, `.jpeg`, `.gif`, `.bmp`, `.tiff`, `.webp`, and more.
 - **Advanced Entity Recognition:** Uses Presidio and a Transformer model (`Davlan/xlm-roberta-base-ner-hrl`) for high-accuracy entity detection.
 - **Cybersecurity-Focused Recognizers:** Includes custom logic to detect specific patterns like IP addresses, URLs, hostnames, hashes, UUIDs, and more.
@@ -96,6 +96,17 @@ The tool uses a SQLite database (`db/entities.db`) to persist the mapping betwee
 | `full_hash` | TEXT | The full HMAC-SHA256 hash, used as a unique identifier. |
 | `first_seen` | TEXT | Timestamp of when the entity was first seen. |
 | `last_seen` | TEXT | Timestamp of when the entity was last seen. |
+
+## Performance Validation
+
+The tool's effectiveness was validated in two representative case studies from the research paper, demonstrating high precision in complex scenarios:
+
+| Scenario | Description | Precision | Recall | F1-Score |
+| :--- | :--- | :--- | :--- | :--- |
+| **PDF with OCR** | An incident report with PII in text and embedded terminal screenshots. | 100% | 61.9% | 76.5% |
+| **OpenVAS XML** | A vulnerability report with nested technical entities (hashes, certs, etc.). | 100% | 85.42% | 92.13% |
+
+The results confirm the engine's accuracy and the value of the specialized OCR and technical recognizers.
 
 ## Supported Entities & Languages
 
@@ -236,7 +247,7 @@ uv run scripts/deanonymize.py "[PERSON_...hash...]"
 - `--lang <code>`: Sets the document's language (e.g., `en`, `pt`). Default: `en`.
 - `--preserve-entities <TYPES>`: A comma-separated list of entity types to *not* anonymize (e.g., `"LOCATION,HOSTNAME"`).
 - `--allow-list <TERMS>`: A comma-separated list of terms to ignore.
-- `--slug-length <NUM>`: Sets the character length of the hash displayed in the slug (1-64). If not set, the full hash is used.
+- `--slug-length <NUM>`: Sets the character length of the hash displayed in the slug (1-64). Defaults to 64 (the full hash) if not specified.
 - `--list-entities`: Lists all supported entity types and exits.
 - `--list-languages`: Lists all supported languages and exits.
 
@@ -256,7 +267,7 @@ uv run python -m unittest tests/test_anon_integration.py
 The `scripts/` directory contains several helper scripts for analysis and management.
 
 #### `deanonymize.py`
-**Function:** Reverses the anonymization of a single slug, revealing the original text. Requires the `ANON_SECRET_KEY` to be set.
+**Function:** Reverses the anonymization of a single slug, revealing the original text. Requires the `ANON_SECRET_KEY` to be set and supports audit logging.
 **Usage:**
 ```bash
 uv run scripts/deanonymize.py "[PERSON_a1b2c3d4...]"
