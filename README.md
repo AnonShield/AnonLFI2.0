@@ -53,10 +53,10 @@ graph TD
 
 ## Key Features
 
-- **Multiple File Format Support:** Anonymizes `.txt`, `.csv`, `.json`, `.xml`, `.pdf`, `.docx`, and `.xlsx`. 
-- **OCR for Images:** Automatically extracts and anonymizes text embedded in images within PDF and DOCX files. Also supports direct anonymization of image files like `.png`, `.jpeg`, `.gif`, `.bmp`, and `.tiff`.
+- **Multiple File Format Support:** Anonymizes a wide range of formats, including `.txt`, `.csv`, `.json`, `.xml`, `.pdf`, `.docx`, and `.xlsx`.
+- **OCR for Images:** Automatically extracts and anonymizes text embedded in images within PDF and DOCX files. Also supports direct anonymization of image files like `.png`, `.jpeg`, `.gif`, `.bmp`, `.tiff`, `.webp`, and more.
 - **Advanced Entity Recognition:** Uses Presidio and a Transformer model (`Davlan/xlm-roberta-base-ner-hrl`) for high-accuracy entity detection.
-- **Custom Recognizers:** Includes custom logic to detect specific patterns like CVEs and IP addresses.
+- **Cybersecurity-Focused Recognizers:** Includes custom logic to detect specific patterns like IP addresses, URLs, hostnames, hashes, UUIDs, and more.
 - **Consistent & Secure Anonymization:** Generates stable HMAC-SHA256-based slugs for each unique entity.
 - **Controlled De-anonymization:** A separate script allows for retrieving original data from a slug, protected by the same secret key.
 - **Configurable:** Allows preserving specific entity types, adding terms to an allow-list, and customizing the anonymized slug length.
@@ -100,27 +100,52 @@ The tool uses a SQLite database (`db/entities.db`) to persist the mapping betwee
 ## Supported Entities & Languages
 
 #### Entities
-By default, the tool is configured to detect and anonymize the following entity types:
+By default, the tool is configured to detect and anonymize a wide range of PII and cybersecurity-related entities:
 - `PERSON`
 - `LOCATION`
 - `ORGANIZATION`
 - `EMAIL_ADDRESS`
 - `PHONE_NUMBER`
-- `IP_ADDRESS` (custom recognizer)
-- `CVE` (custom recognizer)
+- `IP_ADDRESS`
+- `URL`
+- `HOSTNAME`
+- `HASH` (e.g., SHA256, MD5)
+- `UUID`
+- `CERT_SERIAL` (Certificate Serials)
+- `CPE_STRING` (Common Platform Enumeration)
+- `CERT_BODY` (Base64 Certificate Bodies)
 
 *This list can be retrieved by running `uv run anon.py --list-entities`.*
 
 #### Languages
-The tool is pre-configured for several languages, including:
+The tool is pre-configured for **24 languages**:
 
 | Code | Language |
 | :--- | :--- |
+| `ca` | Catalan |
+| `zh` | Chinese |
+| `hr` | Croatian |
+| `da` | Danish |
+| `nl` | Dutch |
 | `en` | English |
-| `pt` | Portuguese |
-| `es` | Spanish |
+| `fi` | Finnish |
 | `fr` | French |
 | `de` | German |
+| `el` | Greek |
+| `it` | Italian |
+| `ja` | Japanese |
+| `ko` | Korean |
+| `lt` | Lithuanian |
+| `mk` | Macedonian |
+| `nb` | Norwegian Bokmål |
+| `pl` | Polish |
+| `pt` | Portuguese |
+| `ro` | Romanian |
+| `ru` | Russian |
+| `sl` | Slovenian |
+| `es` | Spanish |
+| `sv` | Swedish |
+| `uk` | Ukrainian |
 
 *For a full list of supported languages, run `uv run anon.py --list-languages`.*
 
@@ -209,15 +234,15 @@ uv run scripts/deanonymize.py "[PERSON_...hash...]"
 **Command-Line Options:**
 - `file_path`: The path to the target file or directory to be anonymized.
 - `--lang <code>`: Sets the document's language (e.g., `en`, `pt`). Default: `en`.
-- `--preserve-entities <TYPES>`: A comma-separated list of entity types to *not* anonymize (e.g., `"LOCATION,CVE"`).
+- `--preserve-entities <TYPES>`: A comma-separated list of entity types to *not* anonymize (e.g., `"LOCATION,HOSTNAME"`).
 - `--allow-list <TERMS>`: A comma-separated list of terms to ignore.
-- `--slug-length <NUM>`: Sets the character length of the hash displayed in the slug (1-64).
+- `--slug-length <NUM>`: Sets the character length of the hash displayed in the slug (1-64). If not set, the full hash is used.
 - `--list-entities`: Lists all supported entity types and exits.
 - `--list-languages`: Lists all supported languages and exits.
 
 **Example with Options:**
 ```bash
-uv run anon.py cve_report.docx --lang en --preserve-entities "CVE" --slug-length 12
+uv run anon.py incident_report.pdf --lang en --preserve-entities "HOSTNAME" --slug-length 12
 ```
 
 ### Running Tests
