@@ -300,22 +300,25 @@ uv run scripts/get_ticket_count.py <path_to_directory>
 ```bash
 uv run scripts/count_eng.py <path_to_csv_folder>
 ```
+## 📄 Citation
 
-@inproceedings{errc,
- author = {Cristhian Kapelinski and Douglas Lautert and Beatriz Machado and Diego Kreutz},
- title = { AnonLFI 2.0: Extensible Architecture for PII Pseudonymization in CSIRTs with OCR and Technical Recognizers},
- booktitle = {Anais da XXII Escola Regional de Redes de Computadores},
- location = {Porto Alegre/RS},
- year = {2025},
- keywords = {},
- issn = {0000-0000},
- pages = {81--87},
- publisher = {SBC},
- address = {Porto Alegre, RS, Brasil},
- doi = {10.5753/errc.2025.17784},
- url = {https://sol.sbc.org.br/index.php/errc/article/view/39186}
+If you use **AnonLFI 2.0** in your research or project, please cite the following paper:
+
+> Cristhian Kapelinski, Douglas Lautert, Beatriz Machado, and Diego Kreutz. **"AnonLFI 2.0: Extensible Architecture for PII Pseudonymization in CSIRTs with OCR and Technical Recognizers"**. In *Anais da XXII Escola Regional de Redes de Computadores (ERRC)*, pp. 81-87. Porto Alegre, RS, Brasil, 2025. SBC. DOI: [10.5753/errc.2025.17784](https://doi.org/10.5753/errc.2025.17784).
+
+```bibtex
+@inproceedings{Kapelinski2025_AnonLFI,
+  author    = {Cristhian Kapelinski and Douglas Lautert and Beatriz Machado and Diego Kreutz},
+  title     = {AnonLFI 2.0: Extensible Architecture for PII Pseudonymization in CSIRTs with OCR and Technical Recognizers},
+  booktitle = {Anais da XXII Escola Regional de Redes de Computadores (ERRC)},
+  year      = {2025},
+  pages     = {81--87},
+  publisher = {SBC},
+  address   = {Porto Alegre, RS, Brasil},
+  doi       = {10.5753/errc.2025.17784},
+  url       = {[https://sol.sbc.org.br/index.php/errc/article/view/39186](https://sol.sbc.org.br/index.php/errc/article/view/39186)}
 }
-
+```
 
 ## License
 
