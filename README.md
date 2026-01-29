@@ -301,6 +301,22 @@ uv run scripts/get_ticket_count.py <path_to_directory>
 uv run scripts/count_eng.py <path_to_csv_folder>
 ```
 
+@inproceedings{errc,
+ author = {Cristhian Kapelinski and Douglas Lautert and Beatriz Machado and Diego Kreutz},
+ title = { AnonLFI 2.0: Extensible Architecture for PII Pseudonymization in CSIRTs with OCR and Technical Recognizers},
+ booktitle = {Anais da XXII Escola Regional de Redes de Computadores},
+ location = {Porto Alegre/RS},
+ year = {2025},
+ keywords = {},
+ issn = {0000-0000},
+ pages = {81--87},
+ publisher = {SBC},
+ address = {Porto Alegre, RS, Brasil},
+ doi = {10.5753/errc.2025.17784},
+ url = {https://sol.sbc.org.br/index.php/errc/article/view/39186}
+}
+
+
 ## License
 
 This tool is licensed under the [GPL-3.0](./LICENSE).
